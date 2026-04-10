@@ -7,12 +7,9 @@
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         
-        def traverse(p,q):
-            if not p and not q:
-                return True
-            if (not p and q) or (not q and p):
-                return False
-
-            check = p.val == q.val
-            return check and traverse(p.left, q.left) and traverse(p.right, q.right)
-        return traverse(p,q)
+        if not p and not q:
+            return True
+        elif not p or not q:
+            return False
+        else:
+            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
