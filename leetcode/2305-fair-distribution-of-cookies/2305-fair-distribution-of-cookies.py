@@ -13,6 +13,8 @@ class Solution:
                 self.ans = min(self.ans, max(bucket))
                 bucket[j] -= cookies[idx]
                 return
+            if max(bucket) >self.ans:
+                return
             
             for i in range(k):
                 bucket[i] += cookies[idx]
