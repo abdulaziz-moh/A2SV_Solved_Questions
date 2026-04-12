@@ -13,6 +13,8 @@ class Solution:
                         ans = True
             
             for i in range(len(string)):
+                if ans:
+                    break
                 path.append(string[:i+1])
                 backtrack(string[i+1:], path)
                 path.pop()
