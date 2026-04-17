@@ -12,11 +12,10 @@ class Solution:
                     prev = position[i]
             return cnt <= 0
         
-        left, right = 0, 10**10
+        left, right = 0, 10**9
         ans = 0
         while left <= right:
             mid = (right + left) // 2
-            # print(mid-start)
             if isvalid(mid):
                 ans = mid
                 left = mid + 1
