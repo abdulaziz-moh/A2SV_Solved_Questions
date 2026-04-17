@@ -1,6 +1,5 @@
 class Solution:
     def maxDistance(self, position: List[int], m: int) -> int:
-        start, end = min(position), max(position)
         position.sort()
 
         def isvalid(dist):
