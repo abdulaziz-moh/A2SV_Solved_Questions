@@ -1,21 +1,19 @@
-from typing import Counter
-
-
+from bisect import bisect_right
+import sys
+input = sys.stdin.readline
 n = int(input())
-x = list(map(int,input().split()))
-x.sort()
+a = list(map(int,input().split()))
 q = int(input())
 
+a.sort()
 for _ in range(q):
     m = int(input())
-    l = 0
-    r = n
-    
-    while l < r:
-        md = (l+r)//2
-        if x[md] <= m:
-            l = md +1
+    left,right = 0, n-1
+    while left <= right:
+        mid = (left + right) // 2
+        if a[mid] >= m+1:
+            right = mid - 1
         else:
-            r = md
-
-    print(l)
+            left = mid + 1
+    print(left)
+    # print(bisect_right(a,m))
