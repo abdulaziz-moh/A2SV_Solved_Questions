@@ -7,15 +7,16 @@ class Solution:
             graph[v].append(u)
         
         visited = [False for _ in range(n)]
-        def dfs(vertex):
-            if vertex == destination:
-                return True
+        stack = [source]
+        visited[source] = True
 
-            visited[vertex] = True
-            for i in graph[vertex]:
-                if not visited[i]:
-                    found = dfs(i)
-                    if found:
-                        return found
-            return False
-        return dfs(source)
+        while stack:
+            node = stack.pop()
+            if node == destination:
+                return True
+            
+            for v in graph[node]:
+                if not visited[v]:
+                    stack.append(v)
+                    visited[v] = True
+        return False
