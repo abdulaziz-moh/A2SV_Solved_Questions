@@ -1,73 +1,45 @@
 import sys
-from types import GeneratorType
+from collections import deque
 
-# Increase standard recursion depth as a backup
+# Increase recursion depth for deep graphs/trees
 sys.setrecursionlimit(200000)
 input = sys.stdin.readline
 
-# --- ADVANCED RECURSION BOILERPLATE ---
-def bootstrap(f, stack=[]):
-    """Decorator to allow deep recursion using generators."""
-    def wrappedfunc(*args, **kwargs):
-        if stack:
-            return f(*args, **kwargs)
-        else:
-            to = f(*args, **kwargs)
-            while True:
-                if type(to) is GeneratorType:
-                    stack.append(to)
-                    to = next(to)
-                else:
-                    stack.pop()
-                    if not stack:
-                        break
-                    to = stack[-1].send(to)
-            return to
-    return wrappedfunc
-
-# --- COMMON DATA STRUCTURES ---
-class DSU:
-    def __init__(self, n):
-        self.parent = list(range(n))
-    def find(self, i):
-        if self.parent[i] == i: return i
-        self.parent[i] = self.find(self.parent[i])
-        return self.parent[i]
-    def union(self, i, j):
-        root_i, root_j = self.find(i), self.find(j)
-        if root_i != root_j: self.parent[root_i] = root_j
-
-# --- MATH UTILS ---
-MOD = 10**9 + 7
-def gcd(a, b):
-    while b: a, b = b, a % b
-    return a
-
-# --- SOLUTION LOGIC ---
-@bootstrap
-def dfs(u, p, adj):
-    """Example deep recursion DFS."""
-    for v in adj[u]:
-        if v != p:
-            yield dfs(v, u, adj)
-    yield None
-
 def solve():
-    # Example: Reading a graph
-    # n = int(input())
-    # adj = [[] for _ in range(n)]
-    # for _ in range(n-1):
-    #     u, v = map(int, input().split())
-    #     adj[u-1].append(v-1)
-    #     adj[v-1].append(u-1)
-    # dfs(0, -1, adj)
-    pass
+    # 1. Input: Nodes (n) and Edges (m)
+    try:
+        n, m = map(int, input().split())
+    except ValueError: return
 
-def main():
-    t = 1
-    # t = int(input())
-    for _ in range(t):
-        solve()
+    # 2. Convert Edge List to Adjacency List
+    adj = [[] for _ in range(n + 1)]
+    for _ in range(m):
+        u, v = map(int, input().split())
+        adj[u].append(v)
+        adj[v].append(u) # Omit for directed graphs
+
+    visited_dfs = [False] * (n + 1)
+
+    # 3. DFS - Recursive
+    def dfs(u):
+        visited_dfs[u] = True
+        for v in adj[u]:
+            if not visited_dfs[v]:
+                dfs(v)
+
+    # 4. BFS - Iterative
+    def bfs(start_node):
+        dist = [-1] * (n + 1)
+        queue = deque([start_node])
+        dist[start_node] = 0
+        
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    queue.append(v)
+        return dist
 
 if __name__ == "__main__":
-    main()
+    solve()
