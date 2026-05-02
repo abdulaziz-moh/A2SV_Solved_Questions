@@ -15,12 +15,13 @@ def solve():
             if f[i] == '0':
                 f[i] = '2'
                 cnt += 1
-            elif i+1 < n and f[i+1] == '1':
-                f[i+1] == '2'
-                cnt += 1
             elif i-1 >= 0 and f[i-1] == '1':
-                f[i-1] == '2'
+                f[i-1] = '2'
                 cnt += 1
+            elif i+1 < n and f[i+1] == '1':
+                f[i+1] = '2'
+                cnt += 1
+            
     print(cnt)
 
 def main():
