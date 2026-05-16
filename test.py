@@ -1,45 +1,45 @@
-import sys
-from collections import deque
+# from collections import defaultdict
+# from collections import Counter
+# from collections import deque
+# import bisect
+# import math
 
-# Increase recursion depth for deep graphs/trees
-sys.setrecursionlimit(200000)
+import sys
+
+# sys.setrecursionlimit(10**7) 
+
 input = sys.stdin.readline
 
-def solve():
-    # 1. Input: Nodes (n) and Edges (m)
-    try:
-        n, m = map(int, input().split())
-    except ValueError: return
+# def gcd(a, b):
+#     while b:
+#         a, b = b, a % b
+#     return abs(a)
+ 
+def ri(): return int(input().strip())
 
-    # 2. Convert Edge List to Adjacency List
-    adj = [[] for _ in range(n + 1)]
-    for _ in range(m):
-        u, v = map(int, input().split())
-        adj[u].append(v)
-        adj[v].append(u) # Omit for directed graphs
+def rs(): return input().strip()
 
-    visited_dfs = [False] * (n + 1)
+def rsl(): return list(input().strip())
 
-    # 3. DFS - Recursive
-    def dfs(u):
-        visited_dfs[u] = True
-        for v in adj[u]:
-            if not visited_dfs[v]:
-                dfs(v)
+def ris(): return map(int, input().split())
 
-    # 4. BFS - Iterative
-    def bfs(start_node):
-        dist = [-1] * (n + 1)
-        queue = deque([start_node])
-        dist[start_node] = 0
+def rl(): return list(map(int, input().split()))
+
+# def yn(res): print("YES" if res else "NO")
+ 
+inf = float('inf')
+ninf = float('-inf')
+# MOD = 10**9 + 7
+
+def solution(_):
+    pass
         
-        while queue:
-            u = queue.popleft()
-            for v in adj[u]:
-                if dist[v] == -1:
-                    dist[v] = dist[u] + 1
-                    queue.append(v)
-        return dist
 
+def main():
+    t = 1
+    # t = int(ri()) 
+    for _ in range(t):
+        solution(_)
+ 
 if __name__ == "__main__":
-    solve()
+    main()
